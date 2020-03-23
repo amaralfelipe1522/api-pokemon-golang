@@ -8,6 +8,23 @@ import (
 	"os"
 )
 
+// Response armazenará o retorno completo da chamada
+type Response struct {
+	Name    string    `json:"name"`
+	Pokemon []Pokemon `json:"pokemon_entries"`
+}
+
+//Pokemon mapeará todos os pokémons
+type Pokemon struct {
+	EntryNumber int            `json:"entry_number"`
+	Species     PokemonSpecies `json:"pokemon_species"`
+}
+
+//PokemonSpecies armazena o nome das espécies
+type PokemonSpecies struct {
+	Name string `json:"name"`
+}
+
 func main() {
 	response, err := http.Get("http://pokeapi.co/api/v2/pokedex/kanto/")
 
