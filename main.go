@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -23,6 +24,7 @@ type Pokemon struct {
 //PokemonSpecies armazena o nome das espécies
 type PokemonSpecies struct {
 	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 func main() {
@@ -37,6 +39,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	//fmt.Println(string(responseData))
 
-	fmt.Println(string(responseData))
+	var responseObject Response
+	json.Unmarshal(responseData, &responseObject)
+
+	fmt.Println(responseObject.Name)
+	fmt.Println(len(responseObject.Pokemon))
+
+	fmt.Println(responseObject.Pokemon[0].Species.URL)
+
+	for i := 0; i < len(responseObject.Pokemon); i++ {
+		fmt.Println(responseObject.Pokemon[i].Species.Name)
+	}
 }
